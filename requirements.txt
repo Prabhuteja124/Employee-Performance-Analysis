@@ -1,0 +1,28 @@
+numpy
+pandas
+scipy
+matplotlib
+seaborn
+plotly
+ipywidgets
+scikit-learn
+xgboost
+lightgbm
+catboost
+# shap
+# eli5
+# lime
+imbalanced-learn
+feature-engine
+jupyter
+jupyterlab
+ipython
+tqdm
+joblib
+python-dotenv
+pypandoc
+Jinja2
+# dvc
+flask
+# dash
+# dash-bootstrap-components
