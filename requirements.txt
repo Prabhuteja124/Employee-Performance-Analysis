@@ -25,4 +25,4 @@ Jinja2
 # dvc
 flask
 # dash
-# dash-bootstrap-components
+xlrd
