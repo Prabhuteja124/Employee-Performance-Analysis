@@ -9,6 +9,7 @@ To build predictive models that can accurately classify employees into performan
 
 Project Structure
 -----------------
+``` bash
 INX_Employee_Performance/
 ├── data/                        # Raw or intermediate data files
 ├── logs/                        # Logging outputs
@@ -31,6 +32,7 @@ INX_Employee_Performance/
 │   │   ├── logger_config.py    # Logger configuration
 │   │   └── utils.py            # Utility/helper functions
 └── visualization/              # Optional: plots and visual reports
+```
 
 Key Features
 ------------
