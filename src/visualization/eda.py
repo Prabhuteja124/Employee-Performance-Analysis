@@ -86,3 +86,17 @@ def plot_boxplots(df:pd.DataFrame)-> None:
 
     plt.tight_layout(pad=2.0)
     plt.show()
+
+def get_highly_correlated_features(df, threshold=0.7):
+    num_df=df.select_dtypes(exclude='O')
+    corr_matrix=num_df.corr().abs()
+    corr_pairs=(
+        corr_matrix.unstack()
+        .reset_index()
+        .rename(columns={'level_0':'Feature1','level_1':'Feature2',0:'Correlation'})
+    )
+    corr_pairs=corr_pairs[corr_pairs['Feature1']!=corr_pairs['Feature2']]
+    corr_pairs=corr_pairs.drop_duplicates(subset=['Correlation'])
+    high_corr=corr_pairs[corr_pairs['Correlation']>=threshold]
+    high_corr=high_corr.sort_values(by='Correlation',ascending=False).reset_index(drop=True)
+    return high_corr

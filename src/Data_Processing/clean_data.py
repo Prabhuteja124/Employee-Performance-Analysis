@@ -22,11 +22,13 @@ class DataCleanner():
         self.df.drop(columns=self.drop_columns,inplace=True,errors='ignore')
         dropped_columns=set(initial_columns) - set(self.df.columns)
         logger.info(f'Dropped irrelevent columns : {dropped_columns if dropped_columns else 'None'}')
+
     def drop_duplicates(self):
         before_drop=self.df.shape[0]
         self.df.drop_duplicates(inplace=True)
         after_drop=self.df.shape[0]
         logger.info(f'Removed duplicates : {before_drop - after_drop} rows dropped.')
+        
     def mapping_missing_values(self):
         self.df.replace(to_replace=[None],value=np.nan,inplace=True)
         total_missing_values=self.df.isnull().sum()

@@ -2,12 +2,12 @@ import numpy as np
 import pandas as pd
 import os
 import joblib
-from sklearn.model_selection import train_test_split
 from src.Data_Processing.clean_data import DataCleanner
 from sklearn.preprocessing import OneHotEncoder,OrdinalEncoder,StandardScaler,FunctionTransformer
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from src.utils.logger_config import GetLogger
+from src.utils.utils import train_test_split_
 
 logger=GetLogger(__file__).get_logger()
 
@@ -64,6 +64,8 @@ class Preprocessor():
         df.drop(columns=self.drop_columns_after_coreleationanalysis,inplace=True,errors='ignore')
         logger.info(f'Dropped Columns : {self.drop_columns_after_coreleationanalysis}')
 
+        X_train,X_test,y_train,y_test=train_test_split_(df,'PerformanceRating')
+
         self.pipeline =ColumnTransformer(
             transformers=[
                 ('OneHotEncoder',OneHotEncoder(sparse_output=False,handle_unknown='ignore'),self.One_hot_encoding_columns),
@@ -80,33 +82,35 @@ class Preprocessor():
             verbose_feature_names_out=True
         )
         logger.info('ColumnTransformer pipeline defined...')
+        X_train_processed=self.pipeline.fit_transform(X_train)
 
-        df_preprocessed=self.pipeline.fit_transform(df)
-        logger.info('Preprocessor pipeline fitted and transformed data...')
+        X_test_processed=self.pipeline.transform(X_test)
+
+        logger.info('Fitted pipeline on X_train and transformed both train and test data.')
 
         one_hot_cols=self.pipeline.named_transformers_['OneHotEncoder'].get_feature_names_out(self.One_hot_encoding_columns)
         ordinal_cols=self.Ordinal_encoding_columns
         log_scaled_cols=self.transform_columns
-        # imputed_cols = self.imputation_columns
 
-        passthrough_cols = [col for col in df.columns 
+        passthrough_cols=[col for col in df.columns.drop('PerformanceRating') 
                             if col not in (self.One_hot_encoding_columns + 
                                         self.Ordinal_encoding_columns + 
                                         self.transform_columns + 
-                                        # self.imputation_columns + 
                                         self.drop_columns_after_coreleationanalysis)]
 
-        all_columns = list(one_hot_cols) + ordinal_cols + log_scaled_cols  + passthrough_cols
+        all_columns=list(one_hot_cols)+ordinal_cols+log_scaled_cols+passthrough_cols
 
-        # columns=self.pipeline.get_feature_names_out()
         logger.info(f'Getting feature names from ColumnTransformer pipeline...')
 
-        df_preprocessed=pd.DataFrame(df_preprocessed,columns=all_columns)
-        logger.info('Converted numpy output to DataFrame with transformed columns names...')
+        X_train_processed = pd.DataFrame(X_train_processed,columns=all_columns)
+        X_test_processed = pd.DataFrame(X_test_processed,columns=all_columns)
 
-        joblib.dump(self.pipeline,'Preprocessor.pkl')
-        logger.info("Saved the preprocessing pipeline to 'Preprocessor.pkl'.")
+        model_dir = os.path.join(os.path.dirname(os.getcwd()),'models')
+        os.makedirs(model_dir, exist_ok=True)
 
-        return df_preprocessed
+        joblib.dump(self.pipeline,os.path.join(model_dir,'Preprocessor.pkl'))
+        logger.info(f"Saved the preprocessing pipeline to 'Preprocessor.pkl':{model_dir}.")
+
+        return X_train_processed,X_test_processed,y_train,y_test
 
     

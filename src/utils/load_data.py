@@ -12,7 +12,7 @@ logger=GetLogger(__file__).get_logger()
 
 class DataLoader():
     def __init__(self,folder_path='data/raw'):
-        self.folder_path=os.path.join(os.getcwd(),folder_path)
+        self.folder_path=os.path.join(os.path.dirname(os.getcwd()),folder_path)
 
     def load_dataset(self,filename:str)-> pd.DataFrame:
         file_path=os.path.join(self.folder_path,filename)
