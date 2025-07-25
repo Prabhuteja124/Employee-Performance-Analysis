@@ -11,35 +11,33 @@ Project Structure
 -----------------
 ``` bash
 INX_Employee_Performance/
-├── data/                        # Raw or intermediate data files
-├── logs/                        # Logging outputs
-├── models/                      # Saved model files
-├── notebooks/                  # Exploratory and modeling notebooks
-│   ├── data_analysis.ipynb     # EDA notebook
-│   └── modeling.ipynb          # Model training and evaluation notebook
+├── data/                        
+├── logs/                        
+├── models/                      
+├── notebooks/                  
+│   ├── data_analysis.ipynb     
+│   └── modeling.ipynb          
 ├── Project Summary/
-│   └── Summary_project.ipynb   # Executive summary and conclusions
-├── src/                        # Main source code
+│   └── Summary_project.ipynb   
+├── src/                        
 │   ├── Data_Processing/
-│   │   ├── clean_data.py       # Cleaning and imputation
-│   │   └── preprocess.py       # Encoding, scaling, SMOTE, PCA
+│   │   ├── clean_data.py      
+│   │   └── preprocess.py       
 │   ├── models/
-│   │   ├── train_model.py      # Training logic for all classifiers
-│   │   ├── evaluate_model.py   # Accuracy, F1, Confusion Matrix, etc.
-│   │   └── predict_model.py    # Predict on new data
+│   │   ├── train_model.py      
+│   │   ├── evaluate_model.py   
+│   │   └── predict_model.py    
 │   ├── utils/
-│   │   ├── load_data.py        # Data loader function
-│   │   ├── logger_config.py    # Logger configuration
-│   │   └── utils.py            # Utility/helper functions
-└── visualization/              # Optional: plots and visual reports
+│   │   ├── load_data.py        
+│   │   ├── logger_config.py   
+│   │   └── utils.py           
+└── visualization/             
 ```
 
 Key Features
 ------------
 - Clean modular architecture
 - Handles missing values, outliers, and scaling
-- SMOTE for class balancing
-- PCA for dimensionality reduction
 - Supports multiple ML algorithms: SVM, RandomForest, XGBoost, LightGBM, etc.
 - Evaluation includes confusion matrix, F1-score, precision, recall
 - Logging included for reproducibility
