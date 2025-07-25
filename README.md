@@ -1,6 +1,6 @@
 
 INX Future Inc. - Employee Performance Analysis
-
+--------
 This project is a comprehensive machine learning pipeline developed to analyze and predict employee performance at INX Future Inc. The solution covers everything from data preprocessing and exploratory analysis to model training, evaluation, and deployment-ready structure.
 
 Objective
